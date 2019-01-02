@@ -24,6 +24,19 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_dict[config_name])
 
+    #登录注册
+    from info.modules.login import login_blue
+    app.register_blueprint(login_blue)
+    # 房屋蓝图
+    from info.modules.house import house_blue
+    app.register_blueprint(house_blue)
+    # 用户蓝图
+    from info.modules.user import user_blue
+    app.register_blueprint(user_blue)
+    # 订单蓝图
+    from info.modules.order import order_blue
+    app.register_blueprint(order_blue)
+
     # CSRFProtect(app)
     # @app.after_request
     # def after_request(response):

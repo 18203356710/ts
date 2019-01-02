@@ -13,7 +13,7 @@ class Config:
     SESSION_REDIS= StrictRedis(host=REDIS_HOST, port=REDIS_PORT)
     SESSION_USE_SIGNER= True
     PERMAENT_SESSION_LIFETIME= 86400
-    SQLALCHEMY_DATABASE_URI= 'mysql://root:mysql@localhost/info20'
+    SQLALCHEMY_DATABASE_URI= 'mysql://root:mysql@localhost/iHome'
     SQLALCHEMY_TRACK_MODIFICATIONS= False
 
 class DevelopmentConfig(Config):

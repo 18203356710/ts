@@ -7,6 +7,7 @@ from info.utils import constants
 from info import db
 
 
+
 class BaseModel(object):
     """模型基类，为每个模型补充创建时间与更新时间"""
 
