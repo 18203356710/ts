@@ -140,17 +140,17 @@ $(document).ready(function() {
             return;
         }
 
-        var params = {
-            "mobile": mobile,
-            "phonecode": phonecode,
-            "password": password,
-        }
+        // var params = {
+        //     "mobile": mobile,
+        //     "phonecode": phonecode,
+        //     "password": password,
+        // }
 
         // 方式2：拼接参数
-        // var params = {}
-        // $(this).serializeArray().map(function (x) {
-        //     params[x.name] = x.value
-        // })
+        var params = {}
+        $(this).serializeArray().map(function (x) {
+            params[x.name] = x.value
+        })
 
         $.ajax({
             url:"/api/v1.0/user",

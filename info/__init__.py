@@ -5,6 +5,7 @@ from config import config_dict,Config
 # 日志信息
 import logging
 from logging.handlers import RotatingFileHandler
+from werkzeug.routing import BaseConverter
 
 # 设置日志的记录等级
 logging.basicConfig(level=logging.DEBUG)
@@ -20,10 +21,21 @@ from redis import StrictRedis
 redis_store=StrictRedis(host=Config.REDIS_HOST,port=Config.REDIS_PORT,decode_responses=True)
 db=SQLAlchemy()
 from flask_wtf import CSRFProtect,csrf
+
+
+class RegexConverter(BaseConverter):
+    def __init__(self, map, *args):
+        super(RegexConverter, self).__init__(map)
+        # print(map)
+        self.regex = args[0]
+        # print(args[0])
+
+
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_dict[config_name])
 
+    db.init_app(app)
     #登录注册
     from info.modules.login import login_blue
     app.register_blueprint(login_blue)
@@ -37,11 +49,20 @@ def create_app(config_name):
     from info.modules.order import order_blue
     app.register_blueprint(order_blue)
 
+    app.url_map.converters['regex_my'] = RegexConverter
+
+    @app.route('/<regex_my("[a-z]*.html"):temp>')
+    def regex_converter(temp):
+        # print(temp)
+        return app.send_static_file('html/' + temp)
+
     # CSRFProtect(app)
     # @app.after_request
     # def after_request(response):
     #     csrf_token=csrf.generate_csrf()
     #     response.set_cookie('csrf_token',csrf_token)
     #     return response
+
+
 
     return app

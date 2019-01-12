@@ -77,8 +77,11 @@ $(document).ready(function(){
         var house_id = $("#house-id").val()
 
         $(this).ajaxSubmit({
-            url: "/api/v1.0/houses/" + house_id + "/images",
+            url: "/api/v1.0/houses/" + house_id+'/images',
             type: "post",
+            data:{
+                'house_id':house_id
+        },
             headers:{
                 "X-CSRFToken": getCookie("csrf_token")
             },

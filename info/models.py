@@ -39,7 +39,7 @@ class User(BaseModel, db.Model):
     def password(self, value):
         self.password_hash = generate_password_hash(value)
 
-    def check_passowrd(self, password):
+    def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
     def to_dict(self):
@@ -124,6 +124,15 @@ class House(BaseModel, db.Model):
             "ctime": self.create_time.strftime("%Y-%m-%d")
         }
         return house_dict
+        # 首页房屋展示
+
+    def to_index_dict(self):
+        data = {
+            'house_id': self.id,
+            'img_url': constants.QINIU_DOMIN_PREFIX + self.index_image_url if self.index_image_url else '',
+            'title': self.title
+        }
+        return data
 
     def to_full_dict(self):
         """将详细信息转换为字典数据"""
